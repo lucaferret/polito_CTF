@@ -1,6 +1,6 @@
 from pwn import *
 
-elf = context.binary = ELF('./canary_callback', checksec=False)
+#elf = context.binary = ELF('./canary_callback', checksec=False)
 
 #p = process(elf.path)
 p = remote("offsec.m0lecon.it", 13571)

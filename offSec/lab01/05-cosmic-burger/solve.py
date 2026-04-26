@@ -10,7 +10,8 @@ context.terminal = ["gdb"]
 
 p = remote('offsec.m0lecon.it', 13538)
 
-order_addr = 0x7fffffffde80
+# The addresses are obtained using GDB.
+order_addr = 0x7fffffffde80 # buffer addr
 sauce_addr = 0x7fffffffdeac
 cheese_addr = 0x7fffffffdea8
 

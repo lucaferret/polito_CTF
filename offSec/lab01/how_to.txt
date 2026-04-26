@@ -1,0 +1,49 @@
+# How to find the RIP offset.
+1. generate a cyclic pattern, using the cyclic function in python
+    - python3 -c 'from pwn import *; print(cyclic(200).decode())'
+2. pass the string in input to the program in GDB. this, will crash the program execution. inside the 
+   RET address, we will find a 8bytes (64bits) hex number, which will guide us to find the correct offset of the RIP 
+3. you need to decode what you have found. in particular the last 4 bytes (because it is little endian). 
+    - to do this, use python3 -c 'from pwn import *; print(cyclic_find(<value_from_crash>))'
+   this will tell you the exact offset of the RIP, where you have to put the address of the instruction you want to execute.
+
+# Guestbook
+Sign the guestbook and leave your mark. The admin page is hidden somewhere...
+
+the program asks for an input, to be put inside a buf of 64bytes. however, the program read 256 bytes. 
+Our purpose is to override the RIP, so that at the end of vuln() execution, win() function would be executed.
+so, we need to find two things, the RIP offset and the win address (we also need the a ret gadget)
+
+I found the RIP address using the simpel cyclic trik in GDB, and the other information needed using ROPgadget command.
+
+# whispered secrets
+Here, the program provides us the address of the starting of the buffer, where we can write on a buffer of 128 bytes, but the program takes in input up to 1024 bytes.
+the idea is to put a shellcode inside the buffer, and tell the program, using the RIP address, to jump to the start of the buffer for the next instruction.
+the RIP offset is obtained as above, with cyclic, the shellcode is created using pwntools, and the buffer address is provided.
+
+# escape room
+
+here, we need to do two things:
+1. first, we need to tell the program to execute win function, as done before (find the RIP, use the offset, ...)
+2. win function expect two specific parameters. to unlock the shell execution, we need to provide them
+3. passing parameters using assembly can be done using ROP gadgets. in particular, we need the "pop rdi; ret" gadget. this, is used to tell the program: pop an address from the stack and 
+   put it inside rdi. RDI is used to pass the first parameter to a function. we need to repeat this with "pop rsi; ret" (rsi is for the second parameter)
+
+# lemonade stand
+we need to set the value of target to a specific value to unlock the shell execution.
+the offset of the value to override is calculated with the difference between the address of target and the one of the buffer.
+they are found with gdb.
+
+# mini game
+we need to make the program use the win pointer instead of loose pointer, in a way similar for what we have done before. 
+instead of a variable value, we have a function pointer.
+we need to find both the value address of the function pointer and of the buffer. 
+the idea is to override the pointer as done in the previous CTF for the value.
+offset: how many padding until i overwrite the function pointer
+
+# cosmic burger
+to force the shell execution, we have to set two variable to two specific values.
+it is important to note that the order must respect the endianess, so first put the second variable and then the first one.
+after finding the offset of the first variable to put in the stack, the second one, we must put first the second value and then
+the first one. 
+notice that we pass them with p32 and not p64.

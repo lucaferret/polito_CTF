@@ -1,0 +1,26 @@
+# enchantedForest
+
+the code contain a struct with a vector which indicate a spell you want to cast, and a pointer to a function, which is 
+already set. 
+because it reads more bytes of the effective incantation, you can override the function pointer and set it to win.
+
+# lighthouse
+similar to fortune cookie, but you first have to select the vuln() function sending the selection of the panel (1).
+the program, after reading the log entry, print "Log entry recorded. Over and out". this will let you know that the 
+bruteforce was correct. 
+
+# parrot cage
+there is the canary enabled, that you have to leak.
+the parrot repeat everything you say, in an infinite loop until you say bye. but there is a vulnerability, it reads more byte than it
+can handle. 
+1. first, you need to send as many byte as you can to reach the start of the canary. this is needed because we want to print
+   also the canary when the parrot repeat what we have sed. this works because puts will print characters until \0, which is the end
+   of the canary.
+2. then, we can create the payload to force the execution of the win function, because we know the canary
+the first part of the payload is needed to exit the loop. otherwise, the loop will continue and exec read() again and overwrite the
+payload. this will return the control to the function immediatelly, calling what i have put in the RIP register
+
+# the whispering wall
+the buffer is tiny, only 16 bytes. the problem is that the puts function doesn't check for the length of the input.
+so, it is simple to perform a buffer overflow. 
+there are no canary, so you simply need to look for the RIP with the gdb + cyclic technique

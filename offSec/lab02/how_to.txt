@@ -1,0 +1,44 @@
+To find the Offset of the canary, with gdb and cyclic
+put a break before the canary check (the mov), so that the program will stop before breaking and you will be able to see 
+the value that will lead the program to crash 
+
+# pastry shop
+as in previous CTFs, we need to force the execution of a win function. but now, we have the canary enabled.
+before we can pass the win address as payload, we need to leak the canary.
+fortunatelly, the greet function contain a format string vulnerability (there is a printf which directly print the buffer).
+execute once to leak the stack and found the position of the canary (23th position), then, in the real run of the program, we
+use such information to leak it and create the payload ad hoc.
+
+the canary offset has been identified similarly to the RIP register.
+
+# fortune cookie
+because fork is used, the child is the exact copy of the parent. so, every new connection will have the same canary
+in this particular CTF, we use the bof to brute force the canary. 
+the principle is simple: if the server response "OK", we have found another canary character. 
+at the end, we use the retrieved canary to bypass the control, and force the execution of the win function
+
+# space station
+to force the execution of the win function, we have to discover the canary. in this case PIE is enable, the base address change at 
+every execution. so, we need the offset of the win function, and also the base address.
+we can use a format string attack to leak both the canary and the RIP. inside the RIP, we find the next instruction to be 
+executed. in this case the main address + 62.
+with the leaked RIP address minus the offset of the main + 62, we can retrieve the base address, to be used inside the exploit.
+
+#secret library
+similar to the first one, we need to leak the canary using format string attack, then use such information inside the payload, 
+combined with the win address.
+
+the first parameter that asks for the sign, is the part vulnerable to the format string. 
+then it asks for a review, and we send the payload instead
+
+# cafe menu
+here, we need to perform a loop index overwrite to bypass and skip completelly the canary. the principle is to overwrite the index
+of a loop to jump directly at the RIP.
+
+everything is possible because the index is right after the buffer (they are in a struct), so overflowing menu will override the idx.
+why 71 -> because RIP is at 72 position. setting idx at 71, the next write will be done directly on the RIP. (next loop of 71 = 72)
+
+# weather station
+
+same as fortune cookie, we need to bruteforce the cookie. 
+the only difference is that we need to send useless data to the first prompt

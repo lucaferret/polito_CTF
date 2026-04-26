@@ -8,11 +8,11 @@ p = remote('offsec.m0lecon.it', 13551)
 # Your exploit here
 
 # value to find RIP offset: 0x6161617861616177
-RIP_OFFSET = 88
+#RIP_OFFSET = 88
 
 # target address = 0x7fffffffddfc
 # buffer address = 0x7fffffffddb0
-# found with p &target before the scanf and p &buffer
+# found in gdb with p &target before the scanf and p &buffer
 target_addr = 0x7fffffffddfc
 buffer_addr = 0x7fffffffddb0
 
