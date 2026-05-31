@@ -1,0 +1,2 @@
+Mission Control -> inside the briefings page, there is a briefing accessible only if you are commander. And you are an operator. Intercepting the get with burp, you will see  X-Clearance-Level: operator line. Changing from operator to commander will grant you access
+

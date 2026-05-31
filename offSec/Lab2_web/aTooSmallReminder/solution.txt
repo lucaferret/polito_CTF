@@ -1,0 +1,2 @@
+A TOO small reminder… -> The provided cookie is a number between 0 and 10000. Because the range is small, it is feasible to run a brute force attack, trying any number as the cookie. The correct id is 337, and the response body will contain the flag.
+

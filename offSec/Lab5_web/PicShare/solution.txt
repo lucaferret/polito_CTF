@@ -1,0 +1,3 @@
+PicShare -> the website let you update a profile avatar, with a profile name and a description. inside the name and description fields we cannot inject any javascript code, because of escapeHtml().
+The profile picture is clickable, and it will rendere the image. SVG is an accepted format. Svg images are basically XML format with a script field inside. We can inject some code inside and then pass the link to the image to the URL field. This will read the svg file and execute the javascript code. the created image is the picshare_challenge.svg 
+

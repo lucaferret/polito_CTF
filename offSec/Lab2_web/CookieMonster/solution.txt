@@ -1,0 +1,2 @@
+Cookie Monster Army -> the page use cookies unprotected. In the sense that it is only a base64 encoding of the date of registration, a number and the username. Changing the username to admin is enough to obtain the flag. Because the cookie is not verified in any ways (no signature or hash associated), the server accept it. Solved with script_cookie_request.py
+

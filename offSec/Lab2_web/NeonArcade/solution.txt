@@ -1,0 +1,2 @@
+NeonArcade -> this is not a cookie CTF. You have to use the settings panel, where you can modify the theme and the user name. Here, simply add &role=admin to perform a privilege escalation. Once done that, the access to the operator panel is granted.
+

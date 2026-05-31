@@ -1,0 +1,8 @@
+KeyVault -> to solve this challenge, you need to craft a token with the parameter role = admin, in order to access the admin panel where e saves their secrets. The vulnerability here is in the JWT. Inside the header, there is the jku parameter, which advise the server where to take the parameters for the signature verification of the token. The challenge here, is to put a known location, with a public key part of a know key pair.  what we need:
+1. A real cookie, this is needed to take the real parameters and modify only the role part of the payload. 
+2. A json file to put on a known location with the known public key parameter, because the used algorithm is RSA 256. Then, I’ve used ngrok to put this json file online, so that the server can access it on the internet
+3. The crafted header, where the jku is modified with the known one
+4. The signature created with the known secret key
+5. The cookie is so crafter, the header with the modified location where the server will get the public key parameters + the payload with the modified role + the new signature, calculated using the known private key
+6. Changing the real cookie with the crafted one, will grant the access on the 
+

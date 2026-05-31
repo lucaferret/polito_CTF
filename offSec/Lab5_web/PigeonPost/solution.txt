@@ -1,0 +1,2 @@
+PidgeonPost ->  the webpage has a vulnerability: it accept requests from any page (it has a * inside the iframe). So, we can setup a fake website with src the url of the CTF site, and an onload rule which load an image, with an on error fetch to a web hook page, which will receive the admin cookie. Then, we will pass the url of the fake website to the report an URL section of the vulnerable page. 
+

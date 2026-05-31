@@ -1,0 +1,6 @@
+VirusVault: the vulnerability is inside the filename. Probably, on the server side, the scan is constructed concatenating the filename parameter.
+To check this, I simply put ;sleep” after the actual name. we can notice that the server take longer to replay   a way to check if the flag exists is with ;env | grep '^FLAG=offsec{“ this will result in an OK scan, because the flag exists and start with offsec{.
+If, for example, we try to send grep '^FLAG=offsec{ZZZZZ“, grep won’t be able to find anything and so it will return 1. So, the scan evaluate that as a threat.
+
+Knowing that, it is possible to mount a brute force attack, using a simple python script. (Documents/CTF/virusVault.py)  
+

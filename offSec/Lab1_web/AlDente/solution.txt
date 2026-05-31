@@ -1,0 +1,2 @@
+Al Dente -> to access the page where the flag is, it is necessary to be head chef. But the role is stuck to cook. There is a page which allow you to change some profile parameters. But not the role directly. But, in the GET response, every parameter of the profile is available. So, sending also the role, using burp, will override the actual role. We must send email, name and role="head_chef”
+

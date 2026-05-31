@@ -1,0 +1,16 @@
+This is the script to solve the challenge          wrap_close = [c for c in ().__class__.__base__.__subclasses__() if c.__name__ == '_wrap_close'][0]
+    wrap_close.__init__.__globals__['s' + 'ys' + 'tem']('cat /flag.txt')  found inside this website https://ctftime.org/writeup/25816
+
+Why this works:
+In python, everything is an object. And every object is connected with a tree. With this ().__class__.__base__.__subclasses__() I’m climbing up the family tree to the top, and then asking to see every active relatives.
+- () an empty tuple. It is also possible to use “” or []. I just need a basic object to start
+- Class: what I am looking for
+- Base: asking Who did you inherit from. basic types in Python inherit directly from the root, this returns <class 'object'>
+- Subclasses: Give me a list of every single class in memory that inherits from you  _wrap_close is an internal helper class hidden inside Python's os module. Normally, it is used behind the scenes to manage closing file descriptors when you run commands via os.popen.
+* You don't care about what the class actually does; you only care about where it lives. Because _wrap_close is defined inside the os module, it has a direct pipeline to all the other functions inside os—including the ones the sandbox tried to hide from you.
+* Here is how you exploited that pipeline:
+* •	wrap_close.__init__: You access the initialization method (the constructor) of the _wrap_close class.
+* •	.__globals__: This is the real magic trick. Every function/method in Python keeps a hidden dictionary of all the global variables and functions that were available in the file where it was originally written.
+* •	['s' + 'ys' + 'tem']: By looking inside the __globals__ dictionary of _wrap_close, you are literally looking at the internal namespace of the os module. You asked that dictionary for the key 'system', and it handed you the actual os.system function, completely bypassing the sandbox's restrictions!
+ the flag: offsec{4ut0_gr4d3d_sh3ll_br34k_UfClZkkxHKV8Wlmt}
+

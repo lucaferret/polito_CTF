@@ -1,0 +1,7 @@
+{"service":"FlagMail","version":"1.2.3","status":"operational","total_users":6,"last_admin_activity":"2026-04-10T13:26"}
+
+[+] FOUND: 1775827612001
+{"messages":[{"id":2,"sender_name":"System Notifications","subject":"Weekly Backup Report","received_at":"2026-03-31 02:00:00","is_read":0},{"id":3,"sender_name":"HR Department","subject":"Re: New employee onboarding","received_at":"2026-03-30 14:22:00","is_read":0},{"id":1,"sender_name":"IT Security Dept","subject":"CONFIDENTIAL: System Audit Verification Key","received_at":"2026-03-28 09:15:00","is_read":0}]}
+ Il token trovato va usato in burp al posto del token di un utente loggiato in quel momento. Nella inbox ci sarà un messaggio CONFIDENTIAL. Usando la stessa strategia per aprirlo, quindi cambiando il token, si arriverà alla flag. Solved with server.py
+
+

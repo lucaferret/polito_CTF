@@ -1,0 +1,2 @@
+TicketVault -> there is a page tickets with 4 current tickets available. The challenge description advise you that there is a special ticket you cannot access. Looking at the response when you open the ticket page, you can see that the IDs go from 4 to 7. When trying to open a specific ticket, the request is sent to the page /API/ticket/Id. You simply need to modify the Id before sending the request to the server. Putting exactly 1, will display the page where the flag is.
+

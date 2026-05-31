@@ -1,0 +1,2 @@
+Swagshop -> c’è un problema nell’implementazione del sito. Aggiungendo oggetti nel carrello, e successivamente rimuovendo items il conto va negativo. Quindi aggiungendo il pass e un altro item, e rimuovendo l’altro item tante volte puoi decrementare il costo
+
