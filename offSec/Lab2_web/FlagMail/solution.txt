@@ -1,7 +1,8 @@
 {"service":"FlagMail","version":"1.2.3","status":"operational","total_users":6,"last_admin_activity":"2026-04-10T13:26"}
 
+The used token correspond to the timestamp (in unix time) of the last access. so, we need to find the last access of the admin. we have only the date, hour and minutes. we need to find seconds and milliseconds. we can so use a script to iterate through the timestamp and find the exact value. then, we will send a get with such token until we receive a message code different from 401. That would be the exact value of the token. the last two digits of the token represent the ID of the account. Because the first account you create has ID=02, the admin have ID=01.
+
 [+] FOUND: 1775827612001
 {"messages":[{"id":2,"sender_name":"System Notifications","subject":"Weekly Backup Report","received_at":"2026-03-31 02:00:00","is_read":0},{"id":3,"sender_name":"HR Department","subject":"Re: New employee onboarding","received_at":"2026-03-30 14:22:00","is_read":0},{"id":1,"sender_name":"IT Security Dept","subject":"CONFIDENTIAL: System Audit Verification Key","received_at":"2026-03-28 09:15:00","is_read":0}]}
- Il token trovato va usato in burp al posto del token di un utente loggiato in quel momento. Nella inbox ci sarà un messaggio CONFIDENTIAL. Usando la stessa strategia per aprirlo, quindi cambiando il token, si arriverà alla flag. Solved with server.py
 
-
+ The token you found should be used in Burp in place of the token belonging to a currently logged-in user. There will be a message labeled "CONFIDENTIAL" in the inbox. By using the same strategy to open it—and thus changing the token—you will reach the flag. Solved with server.py
